@@ -25,6 +25,10 @@ import model
 import csv
 
 
+def initCatalog():
+    catalog = model.initCatalog
+    return catalog
+
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """

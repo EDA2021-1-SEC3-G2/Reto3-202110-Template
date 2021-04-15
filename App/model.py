@@ -29,7 +29,8 @@ import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.ADT import orderedmap as om
+from DISClib.Algporithms.Sorting import shellsort as sa
 assert cf
 
 """
@@ -39,6 +40,27 @@ los mismos.
 
 # Construccion de modelos
 
+
+def initCatalog():
+    """ Inicializa el analizador
+
+    Crea una lista vacia para guardar todos los crimenes
+    Se crean indices (Maps) por los siguientes criterios:
+    -Fechas
+
+    Retorna el analizador inicializado.
+    """
+    catalog = {'user_hashtag': None,
+                'context': None,
+                'sentiment': None
+                }
+
+    catalog['user_hastag'] = lt.newList('SINGLE_LINKED', # compareIds)
+    catalog['context'] = om.newMap(omaptype='RBT',
+                                      # comparefunction=compareDates)
+    catalog['sentiment'] = om.newMap(omaptype='RBT',
+                                      # comparefunction=compareDates)
+    return catalog
 # Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos
