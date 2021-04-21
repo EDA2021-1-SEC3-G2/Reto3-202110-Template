@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-
+import sys
 import config as cf
 import model
 import csv
@@ -33,7 +33,7 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de libros
 def initCatalog():
-    catalog = model.initCatalog
+    catalog = model.init_Catalog()
     return catalog
 
 # Funciones para la carga de datos
@@ -47,3 +47,5 @@ def loadVideos(catalog):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+def firstreq(catalog, characteristic, minval, maxval):
+    return model.characterizebyreproductions(catalog, characteristic, minval, maxval)

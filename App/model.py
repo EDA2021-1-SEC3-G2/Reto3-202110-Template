@@ -41,8 +41,7 @@ los mismos.
 # Construccion de modelos
 
 
-def initCatalog():
-
+def init_Catalog():
     catalog = {'context': None, "list": None}
     catalog["list"] = lt.newList("SINGLE_LINKED")
     catalog['context'] = mp.newMap(13, maptype="PROBING", loadfactor=0.5)
@@ -58,18 +57,32 @@ def initCatalog():
     mp.put(catalog["context"], "mode", om.newMap(omaptype="RBT", comparefunction=cmpValue))
     mp.put(catalog["context"], "key", om.newMap(omaptype="RBT", comparefunction=cmpValue))
     return catalog
+    
+
 # Funciones para agregar informacion al catalogo
 def addplaylist(catalog, reproduccion):
-    print(reproduccion)
-    # print(catalog)
+    big_map = catalog["context"]
     lt.addLast(catalog["list"], reproduccion)
-    return catalog
-    # caracteristics = mp.keySet(catalog["context"])
-    # for element in lt.iterator(caracteristics):
-        
+    characteristics = mp.keySet(catalog["context"])
+    for element in lt.iterator(characteristics):
+        almost = mp.get(big_map, element)
+        answer = me.getValue(almost)
+        key = reproduccion[element]
+        value = reproduccion
+        om.put(answer, key, value)
+
 # Funciones para creacion de datos
 
+
 # Funciones de consulta
+def characterizebyreproductions(catalog, characteristic, minval, maxval):
+    first = catalog["context"]
+    second = mp.get(first, characteristic)
+    third = me.getValue(second)
+    four = om.values(third, minval, maxval)
+    return four
+
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def cmpValue(value1, value2):

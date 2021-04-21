@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-
+import sys
 import config as cf
 import sys
 import controller
@@ -34,15 +34,23 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
+
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Buscar característica en un rango")
+
 
 catalog = None
 
+
 def iniciarCatalog():
     return controller.initCatalog()
+
+
+def loadVideos(catalog):
+    controller.loadVideos(catalog)
+
 """
 Menu principal
 """
@@ -51,11 +59,15 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        information = iniciarCatalog()
-        catalog = controller.loadVideos(information)
+        catalog = iniciarCatalog()
+        loadedvideos = controller.loadVideos(catalog)
 
     elif int(inputs[0]) == 2:
-        pass
+        characteristic = input("Ingrese la característica a evaluar: ")
+        minval = input("ingrese el mínimo valor: ")
+        maxval = input("Ingrese el maximo valor: ")
+        answer = controller.firstreq(catalog, characteristic, minval, maxval)
+        print(answer)
 
     else:
         sys.exit(0)
