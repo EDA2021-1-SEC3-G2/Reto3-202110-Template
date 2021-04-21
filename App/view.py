@@ -41,6 +41,8 @@ def printMenu():
 
 catalog = None
 
+def iniciarCatalog():
+    return controller.initCatalog()
 """
 Menu principal
 """
@@ -49,7 +51,8 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        catalog = controller.initCatalog()
+        information = iniciarCatalog()
+        catalog = controller.loadVideos(information)
 
     elif int(inputs[0]) == 2:
         pass

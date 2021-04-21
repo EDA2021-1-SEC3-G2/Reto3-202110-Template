@@ -25,17 +25,24 @@ import model
 import csv
 
 
-def initCatalog():
-    catalog = model.initCatalog
-    return catalog
+
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
+def initCatalog():
+    catalog = model.initCatalog
+    return catalog
 
 # Funciones para la carga de datos
+def loadVideos(catalog):
+    videosfile = cf.data_dir + 'context_content_features-small.csv'
+    input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
+    for reproduccion in input_file:
+        model.addplaylist(catalog, reproduccion)
+    
 
 # Funciones de ordenamiento
 
