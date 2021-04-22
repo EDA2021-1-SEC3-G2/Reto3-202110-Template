@@ -45,17 +45,17 @@ def init_Catalog():
     catalog = {'context': None, "list": None}
     catalog["list"] = lt.newList("SINGLE_LINKED")
     catalog['context'] = mp.newMap(13, maptype="PROBING", loadfactor=0.5)
-    mp.put(catalog["context"], "instrumentalness", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "liveness", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "speechiness", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "danceability", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "valence", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "loudness", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "tempo", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "acousticness", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "energy", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "mode", om.newMap(omaptype="RBT", comparefunction=cmpValue))
-    mp.put(catalog["context"], "key", om.newMap(omaptype="RBT", comparefunction=cmpValue))
+    mp.put(catalog["context"], "instrumentalness", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "liveness", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "speechiness", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "danceability", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "valence", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "loudness", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "tempo", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "acousticness", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "energy", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "mode", om.newMap(omaptype="RBT"))
+    mp.put(catalog["context"], "key", om.newMap(omaptype="RBT"))
     return catalog
     
 
@@ -67,10 +67,16 @@ def addplaylist(catalog, reproduccion):
     for element in lt.iterator(characteristics):
         almost = mp.get(big_map, element)
         answer = me.getValue(almost)
-        key = reproduccion[element]
-        value = reproduccion
-        om.put(answer, key, value)
-
+        key = float(reproduccion[element])
+        if om.contains(answer, key):
+            addtolist = om.get(answer, key)
+            listadd = me.getValue(addtolist)
+            lt.addLast(listadd, reproduccion)
+        else:
+            value = lt.newList("SINGLE_LINKED")
+            lt.addLast(value, reproduccion)
+            om.put(answer, key, value)
+    
 # Funciones para creacion de datos
 
 
@@ -80,14 +86,16 @@ def characterizebyreproductions(catalog, characteristic, minval, maxval):
     second = mp.get(first, characteristic)
     third = me.getValue(second)
     four = om.values(third, minval, maxval)
-    return four
-
+    auxiliarlist = lt.newList("ARRAY_LIST")
+    for element in lt.iterator(four):
+        if lt.size(element) == 1:
+            lt.getElement(element, )
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def cmpValue(value1, value2):
     """
-    Compara dos fechas
+    
     """
     if (value1 == value2):
         return 0

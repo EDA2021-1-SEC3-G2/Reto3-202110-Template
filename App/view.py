@@ -64,10 +64,10 @@ while True:
 
     elif int(inputs[0]) == 2:
         characteristic = input("Ingrese la característica a evaluar: ")
-        minval = input("ingrese el mínimo valor: ")
-        maxval = input("Ingrese el maximo valor: ")
+        minval = float(input("ingrese el mínimo valor: "))
+        maxval = float(input("Ingrese el maximo valor: "))
         answer = controller.firstreq(catalog, characteristic, minval, maxval)
-        print(answer)
+        print(lt.size(answer))
 
     else:
         sys.exit(0)
