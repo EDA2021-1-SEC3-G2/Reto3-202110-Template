@@ -42,9 +42,10 @@ los mismos.
 
 
 def init_Catalog():
-    catalog = {'context': None, "list": None}
+    catalog = {'context': None, "list": None, "author": None}
     catalog["list"] = lt.newList("SINGLE_LINKED")
     catalog['context'] = mp.newMap(13, maptype="PROBING", loadfactor=0.5)
+    catalog["author"] = mp.newMap(307, maptype="PROBING", loadfactor=0.5, comparefunction=cmpAuthor)
     mp.put(catalog["context"], "instrumentalness", om.newMap(omaptype="RBT"))
     mp.put(catalog["context"], "liveness", om.newMap(omaptype="RBT"))
     mp.put(catalog["context"], "speechiness", om.newMap(omaptype="RBT"))
@@ -64,6 +65,12 @@ def addplaylist(catalog, reproduccion):
     big_map = catalog["context"]
     lt.addLast(catalog["list"], reproduccion)
     characteristics = mp.keySet(catalog["context"])
+    if mp.contains(catalog["author"], reproduccion["artist_id"]):
+        copauthor = mp.get(catalog["author"], reproduccion["artist_id"])
+        valauthor = me.getValue(copauthor)
+        lt.addLast(valauthor, reproduccion)
+    else:
+        mp.put(catalog["author"], reproduccion["artist_id"], lt.newList("SINGLE_LINKED"))
     for element in lt.iterator(characteristics):
         almost = mp.get(big_map, element)
         answer = me.getValue(almost)
@@ -76,7 +83,7 @@ def addplaylist(catalog, reproduccion):
             value = lt.newList("SINGLE_LINKED")
             lt.addLast(value, reproduccion)
             om.put(answer, key, value)
-    
+    return catalog
 # Funciones para creacion de datos
 
 
@@ -93,13 +100,14 @@ def characterizebyreproductions(catalog, characteristic, minval, maxval):
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-def cmpValue(value1, value2):
+def cmpAuthor(author1, entry):
     """
     
     """
-    if (value1 == value2):
+    author2 = me.getKey(entry)
+    if (author1 == author2):
         return 0
-    elif (value1 > value2):
+    elif (author1 > author2):
         return 1
     else:
         return -1
