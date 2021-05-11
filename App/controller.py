@@ -44,7 +44,7 @@ def initCatalog():
 
 # Funciones para la carga de datos
 def loadVideos(catalog):
-    videosfile = cf.data_dir + 'context_content_features-small.csv'
+    videosfile = cf.data_dir + 'context_content_features-5pct.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for reproduccion in input_file:
         model.addplaylist(catalog, reproduccion)
@@ -54,7 +54,7 @@ def loadVideos(catalog):
 
 
 def loadhashtags(catalog):
-    hashtagfile = cf.data_dir + "user_track_hashtag_timestamp-small.csv"
+    hashtagfile = cf.data_dir + "user_track_hashtag_timestamp-5pct.csv"
     imputfile = csv.DictReader(open(hashtagfile, encoding="utf-8"))
     for hashtag in imputfile:
         model.addhashtag(catalog, hashtag)
