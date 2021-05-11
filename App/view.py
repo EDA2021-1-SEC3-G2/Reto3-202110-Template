@@ -152,6 +152,10 @@ while True:
             print("Eleccion inválida")
         print("Tiempo [ms]: ", f"{answer[1]:.3f}", "  ||  ",
               "Memoria [kB]: ", f"{answer[2]:.3f}")
+    elif int(input[0]) == 6:
+        input("Ingrese la hora de incio: ")
+        input("Ingrese la hora final: ")
+        
     else:
         sys.exit(0)
 sys.exit(0)

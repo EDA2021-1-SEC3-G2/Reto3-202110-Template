@@ -193,7 +193,7 @@ def musicalgenres(catalog, user_list):
         second = mp.get(first, "tempo")
         third = me.getValue(second)
         four = om.values(third, min_val, max_val)
-        auxiliarlist = lt.newList("SINGLE_LINKED")
+        auxiliarlist = lt.newList("ARRAY_LIST")
         for element in lt.iterator(four):
             if lt.size(element) >= 1:
                 for thing in lt.iterator(element):
@@ -261,6 +261,40 @@ def addfourthreq(catalog, name, mini, maxi):
     lt.addLast(mini_list, maxi)
     name = name.lower().strip()
     mp.put(repository, name, mini_list)
+
+def toprepsentimental(catalog, start_hour, final_hour):
+    sublist = ["reggae","down-tempo","chill-out","hip-hop","jazzandfunk","pop","ryb","rock","metal"].split(",")
+    view_list = lt.newList("ARRAY_LIST")
+    for element in sublist:
+        element_list = lt.newList("ARRAY_LIST")
+        lt.addLast(element_list, element)
+        ranges = values(catalog, element)
+        min_val = lt.getElement(ranges, 1)
+        max_val = lt.getElement(ranges, 2)
+        first = catalog["context"]
+        second = mp.get(first, "tempo")
+        third = me.getValue(second)
+        four = om.values(third, min_val, max_val)
+        auxiliarlist = lt.newList("ARRAY_LIST")
+        for element in lt.iterator(four):
+            if lt.size(element) >= 1:
+                for thing in lt.iterator(element):
+                    lt.addLast(auxiliarlist, thing)
+        lt.addLast(element_list, lt.size(auxiliarlist))
+
+def newmaphour(catalog, reproduccion):
+    auxiliar = reproduccion["created_at"]
+    crimedate = datetime.datetime.strptime(auxiliar, '%Y-%m-%d %H:%M:%S')
+    entry = om.get(map, crimedate.date())
+    if entry is None:
+        datentry = newDataEntry(crime)
+        om.put(map, crimedate.date(), datentry)
+    else:
+        datentry = me.getValue(entry)
+    addDateIndex(datentry, crime)
+
+
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 
